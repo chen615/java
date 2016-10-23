@@ -8,8 +8,10 @@ import org.apache.http.client.methods.HttpGet;
 
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;  
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+
+import org.apache.http.entity.StringEntity;
 
 import org.apache.http.protocol.HTTP;
 
@@ -30,10 +32,11 @@ public class Hcurl
     public static void main(String args[]) throws IOException
     {
         Hcurl hcurl = new Hcurl();
-        hcurl.doGet();
+        // hcurl.doGet();
         // hcurl.doPost();
+        hcurl.doPostBody();
     }
-    
+
     private void doGet() throws IOException
     {
         CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -52,37 +55,37 @@ public class Hcurl
             // System.out.println(result);
             // System.out.println(entity.getContent());
             // System.out.println(EntityUtils.toString(entity));
-            
+
             //没有对象直接解析JSON对象
             JSONObject jobj = JSON.parseObject(result);
             System.out.println(jobj.getString("status"));
             System.out.println(jobj.getString("msg"));
             String results = jobj.getString("result");
             // System.out.println(results);
-            
+
             JSONObject jobj1 = JSON.parseObject(results);
             System.out.println(jobj1.getString("number"));
             System.out.println(jobj1.getString("type"));
             System.out.println(jobj1.getString("deliverystatus"));
             System.out.println(jobj1.getString("issign"));
-            
+
             String lists = jobj1.getString("list");
             // System.out.println(jobj1.getString("list"));
-            
+
             //没有对象直接解析JSON数组
             JSONArray jarr = JSON.parseArray(lists);
             for(int i=0,len=jarr.size();i<len;i++){
                 JSONObject temp=  jarr.getJSONObject(i);
                 System.out.printf("name:%s, %s\n",temp.getString("time"), temp.getString("status"));
             }
-            
+
         } catch(Exception e) {
             System.out.println("error: " + e.getMessage());
         } finally {
             httpclient.close();
         }
     }
-    
+
     private void doPost() throws IOException
     {
         CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -90,12 +93,11 @@ public class Hcurl
         try {
             HttpPost request = new HttpPost(url);
             // request.setHeader("", "");
-            
+
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("username", "chen jian ping"));
-            
+
             request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-            
             CloseableHttpResponse response = httpclient.execute(request);
 
             // System.out.println(response.getStatusLine());
@@ -105,22 +107,46 @@ public class Hcurl
             System.out.println(result);
             // System.out.println(entity.getContent());
             // System.out.println(EntityUtils.toString(entity));
-            
-            //没有对象直接解析JSON对象
-            // JSONObject jobj = JSON.parseObject(result);
-            // System.out.println(jobj.getString("username"));
-            
-            //没有对象直接解析JSON数组
-            JSONArray jarr = JSON.parseArray(result);
-            for(int i=0,len=jarr.size();i<len;i++){
-                JSONObject temp=  jarr.getJSONObject(i);
-                System.out.printf("name:%s\n",temp.getString("username"));
-            }
-            
+
+
         } catch(Exception e) {
             System.out.println("error: " + e.getMessage());
         } finally {
             httpclient.close();
         }
+    }
+
+    private void doPostBody() throws IOException
+    {
+        String uri = "http://local.mvc.com/";
+
+        List<Object> list = new ArrayList<>();
+        list.add("chen");
+
+        JSONObject jsonobject = new JSONObject();
+        jsonobject.put("username", "Li Ming");
+        jsonobject.put("age", 23);
+        jsonobject.put("list", list);
+
+        // System.out.println(jsonobject.toString());
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+
+        try {
+            HttpPost request = new HttpPost(uri);
+            request.addHeader("Content-Type", "application/json");
+            request.setEntity(new StringEntity(jsonobject.toString()));
+            CloseableHttpResponse response = httpclient.execute(request);
+
+            HttpEntity entity = response.getEntity();
+            String result = EntityUtils.toString(entity, HTTP.UTF_8);
+            System.out.println(result);
+        } catch(Exception e){
+
+        } finally {
+            httpclient.close();
+        }
+
+        // RequestEntity entity = new StringRequestEntity(data.toString(), "application/json", null);
+        // request.setRequestEntity(entity);
     }
 }
