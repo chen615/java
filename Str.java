@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
-
 import com.alibaba.fastjson.JSON;
 
 import com.cctvmall.entity.User;
