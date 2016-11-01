@@ -19,8 +19,8 @@ public class Jr
         for(Map.Entry entry : m.entrySet()) {
             str = (String)entry.getKey().toString();
             v = Integer.parseInt(entry.getValue().toString());
-            if(str.startsWith("lvdian")) {
-                if(v > 1476752400 && v < 1476838800) {
+            if(str.startsWith("baiyunshan")) {
+                if(v > 1477875600 && v < 1477962000) {
                     j = j + 1;
                 } else {
                     System.out.println(str + "=" + v);
