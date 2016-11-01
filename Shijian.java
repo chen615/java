@@ -1,13 +1,13 @@
 /**
  * 时间
  */
- import java.util.Date;
- import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.SimpleDateFormat;
  
- public class Shijian
- {
-     public static void main(String args[])
-     {
+public class Shijian
+{
+    public static void main(String args[])
+    {
         Date date = new Date();
         long times = date.getTime();
         // 输出时间戳
@@ -22,5 +22,5 @@
         long times1 = 1412654676572L;
         Date date1 = new Date(times1);
         System.out.println(date1);
-     }
- }
+    }
+}
