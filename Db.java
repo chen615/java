@@ -28,6 +28,7 @@ public class Db
             } else {
                 System.out.println("fail");
             }
+            
             /*
             // 查询
             st = con.createStatement();
@@ -41,17 +42,38 @@ public class Db
                 // System.out.println(rs.getString("question_text"));
                 Question question = new Question(rs.getInt("id"), rs.getString("pub_date"), rs.getString("username"));
                 questions.add(question);
-            }
-            */
+            } */
+            
             
             // 插入
+            
             String sql = "INSERT INTO `blog_question`(`question_text`, `pub_date`, `username`) VALUE(?,?,?)";
             PreparedStatement pr = con.prepareStatement(sql);
-            pr.setString(1, "学习php");
+            pr.setString(1, "php");
             pr.setString(2, "2016-10-22 12:23:23");
-            pr.setString(3, "李明");
-            pr.executeUpdate();
+            pr.setString(3, "Liming");
+            System.out.println(pr.executeUpdate());
             pr.close();
+            
+            
+            //修改
+            /*
+            String sql = "UPDATE `blog_question` SET `question_text`=?, `pub_date`=? WHERE `id`= ?";
+            PreparedStatement pStmt = con.prepareStatement(sql);
+            pStmt.setString(1, "1234567");
+            // pStmt.setDate(2, );
+            pStmt.setString(2, "2016-06-24 14:59:23");
+            pStmt.setInt(3, 2);
+            System.out.println(pStmt.executeUpdate());
+            pStmt.close(); */
+            
+            // 删除
+            /*
+            String sql = "DELETE FROM `blog_question` WHERE `id`=?";
+            PreparedStatement pStmt = con.prepareStatement(sql);
+            pStmt.setInt(1, 7);
+            System.out.println(pStmt.executeUpdate());
+            pStmt.close(); */
             
             con.close();
             // System.out.println(g.toJson(questions));
