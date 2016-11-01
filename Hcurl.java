@@ -13,7 +13,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 
 import org.apache.http.entity.StringEntity;
 
-import org.apache.http.protocol.HTTP;
+// import org.apache.http.protocol.HTTP;
 
 import org.apache.http.util.EntityUtils;
 import org.apache.http.HttpEntity;
@@ -32,9 +32,9 @@ public class Hcurl
     public static void main(String args[]) throws IOException
     {
         Hcurl hcurl = new Hcurl();
-        // hcurl.doGet();
+        hcurl.doGet();
         // hcurl.doPost();
-        hcurl.doPostBody();
+        // hcurl.doPostBody();
     }
 
     private void doGet() throws IOException
@@ -51,7 +51,7 @@ public class Hcurl
             // System.out.println(response.getStatusLine());
             // System.out.println(response.getStatusLine().getStatusCode());
             HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity, HTTP.UTF_8);
+            String result = EntityUtils.toString(entity, "utf-8");
             // System.out.println(result);
             // System.out.println(entity.getContent());
             // System.out.println(EntityUtils.toString(entity));
@@ -97,13 +97,13 @@ public class Hcurl
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("username", "chen jian ping"));
 
-            request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+            request.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
             CloseableHttpResponse response = httpclient.execute(request);
 
             // System.out.println(response.getStatusLine());
             // System.out.println(response.getStatusLine().getStatusCode());
             HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity, HTTP.UTF_8);
+            String result = EntityUtils.toString(entity, "utf-8");
             System.out.println(result);
             // System.out.println(entity.getContent());
             // System.out.println(EntityUtils.toString(entity));
@@ -138,7 +138,7 @@ public class Hcurl
             CloseableHttpResponse response = httpclient.execute(request);
 
             HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity, HTTP.UTF_8);
+            String result = EntityUtils.toString(entity, "utf-8");
             System.out.println(result);
         } catch(Exception e){
 
